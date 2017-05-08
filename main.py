@@ -8,3 +8,5 @@ tree.insert(6)
 tree.insert(5)
 tree.insert(7)
 tree.remove(6)
+
+tree.preorder()

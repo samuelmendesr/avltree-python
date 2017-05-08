@@ -10,6 +10,22 @@ class BinaryTree:
         else:
             self._root = Node(data)
 
+
+    def remove(self, data):#melhorar depois para self._remove(self._find(self._root, data))
+        node = self._find(self._root, data)
+
+        if node:
+            self._remove(node)
+
+    def preorder(self):
+        self._preorder(self._root)
+
+    def inorder(self):
+        self._inorder(self._root)
+
+    def postorder(self):
+        self._postorder(self._root)
+
     def _insert(self, node, data):
         if data > node.data:
             if node.right:
@@ -45,17 +61,11 @@ class BinaryTree:
         else:
             return node
 
-    def remove(self, data):#melhorar depois
-        node = self._find(self._root, data)
-
-        if node:
-            self._remove(node)
-
     def _remove(self, node):#melhorar depois
         if node.left and node.right:
             min = self._findMin(node.right)
             node.data = min.data
-            min.parent.setLeft(min.right)
+            min.parent.setRight(min.right)
         else:
             parent = {'setChild':None}
 
@@ -69,19 +79,34 @@ class BinaryTree:
                 if node.parent:
                     parent['setChild'](node.left)
                 else:
-                    _root = node.left
-                    _root.parent = None
+                    self._root = node.left
+                    self._root.parent = None
             elif node.right:
                 if node.parent:
                     parent['setChild'](node.right)
                 else:
-                    _root = node.right
-                    _root.parent = None
+                    self._root = node.right
+                    self._root.parent = None
             else:
                 if node.parent:
                     parent['setChild'](None)
                 else:
-                    _root = None
-    #def preorder(self):
-    #def inorder(self):
-    #def postorder(self):
+                    self._root = None
+
+    def _preorder(self, node):
+        if node:
+            print(node.data)
+            self._preorder(node.left)
+            self._preorder(node.right)
+
+    def _inorder(self, node):
+        if node:
+            self._inorder(node.left)
+            print(node.data)
+            self._inorder(node.right)
+
+    def _postorder(self, node):
+        if node:
+            self._postorder(node.left)
+            self._postorder(node.right)
+            print(node.data)
