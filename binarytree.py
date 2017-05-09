@@ -11,7 +11,7 @@ class BinaryTree:
             self._root = Node(data)
 
 
-    def remove(self, data):#melhorar depois para self._remove(self._find(self._root, data))
+    def remove(self, data):
         node = self._find(self._root, data)
 
         if node:
@@ -61,52 +61,52 @@ class BinaryTree:
         else:
             return node
 
-    def _remove(self, node):#melhorar depois
+    def _remove(self, node):
         if node.left and node.right:
             min = self._findMin(node.right)
             node.data = min.data
             min.parent.setRight(min.right)
-        else:
-            parent = {'setChild':None}
-
+        elif node.left:
             if node.parent:
-                if node.parent.right == node:
-                    parent['setChild'] = node.parent.setRight
+                if node.parent.right:
+                    node.parent.setRight(node.left)
                 else:
-                    parent['setChild'] = node.parent.setLeft
-
-            if node.left:
-                if node.parent:
-                    parent['setChild'](node.left)
-                else:
-                    self._root = node.left
-                    self._root.parent = None
-            elif node.right:
-                if node.parent:
-                    parent['setChild'](node.right)
-                else:
-                    self._root = node.right
-                    self._root.parent = None
+                    node.parent.setLeft(node.left)
             else:
-                if node.parent:
-                    parent['setChild'](None)
+                self._root = node.left
+                self._root.parent = None
+        elif node.right:
+            if node.parent:
+                if node.parent.right:
+                    node.parent.setRight(node.right)
                 else:
-                    self._root = None
+                    node.parent.setLeft(node.right)
+            else:
+                self._root = node.right
+                self._root.parent = None
+        else:
+            if node.parent:
+                if node.parent.right:
+                    node.parent.setRight(None)
+                else:
+                    node.parent.setLeft(None)
+            else:
+                self._root = None
 
     def _preorder(self, node):
         if node:
-            print(node.data)
+            print(node)
             self._preorder(node.left)
             self._preorder(node.right)
 
     def _inorder(self, node):
         if node:
             self._inorder(node.left)
-            print(node.data)
+            print(node)
             self._inorder(node.right)
 
     def _postorder(self, node):
         if node:
             self._postorder(node.left)
             self._postorder(node.right)
-            print(node.data)
+            print(node)
