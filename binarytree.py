@@ -1,6 +1,7 @@
 from node import Node
 
 class BinaryTree:
+
     def __init__(self):
         self._root = None
 
@@ -10,10 +11,8 @@ class BinaryTree:
         else:
             self._root = Node(data)
 
-
     def remove(self, data):
         node = self._find(self._root, data)
-
         if node:
             self._remove(node)
 
